@@ -11,7 +11,7 @@ def get_video_start(filename ):
     output = subprocess.Popen(command,
                               shell=True,
                               stdout=subprocess.PIPE
-                              ).stdout.read()
+                              ).stdout.read().decode('utf-8')
     print ("Output: {}".format(output))
     matches = re_start.search(output)
     video_start =0
@@ -29,20 +29,18 @@ def get_video_start(filename ):
 
 
 
-dir = ""
+dir = "/home/nuc/Documents/dataStore/VIDEO"
 
 files = [file for file in os.listdir(dir) if file.endswith(".mp4")]
 numfiles =len(files)
 for i,file in enumerate(files):
-    print ("Reencoding file {} - {}/{}".format( file, i+1, numfiles))
+    print ("Encoding file {} - {}/{}".format( file, i+1, numfiles))
     filename = file.split('.')[0]
     infile = os.path.join(dir, file)
     outfile = os.path.join(dir, 'hap', filename + '.mov')
     if os.path.exists(outfile):
-        print ("Skipped")
         continue
 
     start = get_video_start(infile)
-
     split_cmd = "ffmpeg -i {}  -ss 00:00:0{} -c:v hap  -c:a aac -strict -2 -async 1 {}   ".format(infile,start,  outfile)
     subprocess.call(split_cmd, shell=True)
