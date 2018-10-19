@@ -1,22 +1,21 @@
 from os.path import join
 import subprocess
 import h5py as h5
-from utils.defs import DATA_STORE, HAP_DIR, VIDEO_DIR
 import numpy as np
+DATA_STORE = "/home/nuc/Documents/dataStore"
 db_path = join(DATA_STORE, "database.h5")
 
-# HAP_DIR = ""
+HAP_DIR = join(DATA_STORE, "VIDEO/hap/")
 outfile = "./durations.txt"
 
 
 def get_all_clip_durations(fileNames):
     durations = []
-    for name in fileNames:
+    for i, name in enumerate(fileNames):
         filePath = join(HAP_DIR, name + ".mov")
         command = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 {}".format(
             filePath)
         l = subprocess.check_output(command, shell=True)
-        f.write(l)
         length = float(l)
         durations.append(length)
         print("Video {}/{} - length {}".format(i, len(fileNames), length))

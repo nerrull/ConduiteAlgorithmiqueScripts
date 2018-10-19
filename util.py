@@ -11,7 +11,7 @@ def get_video_start(filename ):
     output = subprocess.Popen(command,
                               shell=True,
                               stdout=subprocess.PIPE
-                              ).stdout.read()
+                              ).stdout.read().decode("utf-8")
     print ("Output: {}".format(output))
     matches = re_start.search(output)
     video_start =0

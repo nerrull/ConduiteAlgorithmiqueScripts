@@ -25,7 +25,7 @@ def createFullAudioClips(videoFiles, videoFilesPath, outPath, sampleRate=48000, 
         audioFileName = videoFile.split(".")[:-1][0] + ".wav"
         audioFilePath = os.path.join(outPath, audioFileName)
         if os.path.exists(audioFilePath):
-            print("SKIPPED : {} alrady exists". format(audioFileName))
+            # print("SKIPPED : {} alrady exists". format(audioFileName))
             continue
 
         start = get_video_start(videoFilePath)
@@ -38,6 +38,7 @@ def createFullAudioClips(videoFiles, videoFilesPath, outPath, sampleRate=48000, 
 
 
 if __name__ =="__main__":
-    HAP_DIR = ""
-    FULL_AUDIO_DIR = ""
+    HAP_DIR = "/home/nuc/Documents/dataStore/VIDEO/hap"
+    FULL_AUDIO_DIR = "/home/nuc/Documents/dataStore/AUDIO"
+
     createFullAudioClips(os.listdir(HAP_DIR),HAP_DIR, FULL_AUDIO_DIR)
