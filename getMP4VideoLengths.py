@@ -24,10 +24,12 @@ def get_all_clip_durations(fileNames):
 def run():
     with h5.File(db_path, mode='r') as f:
         video_names = f.get("video_names").value
-        d =get_all_clip_durations(video_names)
+        d =get_all_clip_durations(video_names[0:10])
 
-    with h5.File(db_path, mode='a') as f:
-        dset = f.create_dataset("video_durations", d.shape, dtype=np.float32, data=d)
+    with h5.File(db_path, mode='r+') as f:
+        durations = np.array(d, dtype= np.float32)
+        data = f.get("video_durations")
+        data[...] = durations
 
 if __name__ =="__main__":
     run()
